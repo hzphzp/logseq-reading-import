@@ -1,0 +1,34 @@
+name: Publish marketplace plugin
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify and package
+        run: |
+          set -eu
+          node --check panel.js
+          python3 -m unittest test_weread.GatewayTests
+          python3 -m py_compile marketplace_helper.py
+          id=$(node -p 'require("./package.json").logseq.id')
+          version=$(node -p 'require("./package.json").version')
+          test "$GITHUB_REF_NAME" = "v$version"
+          mkdir -p "$id/docs"
+          cp -R vendor package.json LICENSE README.md index.html panel.js panel.css icon.svg marketplace_helper.py weread_import.py test_weread.py test_marketplace.py 启动导入助手.command 设置微信读书密钥.command 预览微信读书.command 同步微信读书.command "$id/"
+          cp docs/*.png "$id/docs/"
+          zip -qr "$id.zip" "$id"
+          unzip -tq "$id.zip"
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id=$(node -p 'require("./package.json").logseq.id')
+          gh release create "$GITHUB_REF_NAME" "$id.zip" --verify-tag --latest --title "$GITHUB_REF_NAME · WeRead Notes Import" --notes-file "docs/$GITHUB_REF_NAME.md"

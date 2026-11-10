@@ -1,6 +1,19 @@
 # 微信读书导入 Logseq
 
-**v1.0.0** 适用于 macOS 和 Logseq Desktop **2.0.2** 数据库图谱，使用官方 Logseq CLI。下载并解压 `logseq-reading-import-v1.0.0.zip`，先双击 `设置微信读书密钥.command`，再用预览和同步脚本。运行前可用 `logseq --version` 检查 CLI。
+**WeRead Notes Import v1.1.0** · macOS · Logseq Desktop **2.0.2** 数据库图谱。使用微信读书官方 API 和 Logseq CLI。其他 Logseq 版本的导入接口尚未验证。
+
+## 从 Logseq 中使用
+
+1. 安装插件和 Logseq CLI，打开目标数据库图谱。在访达按 ⌘⇧G 打开 `~/.logseq/plugins/logseq-reading-import/`。
+2. 首次使用双击 `设置微信读书密钥.command` 保存个人 API Key。双击 `启动导入助手.command`，导入期间保持终端窗口打开。
+3. 在 Logseq 命令面板或空白块的斜杠菜单选择 **微信读书 · WeRead Notes Import**。点击「预览」核对书籍、划线和想法数量，再点「导入此预览」。助手会备份选中的图谱、导入已预览的内容并核对结果。
+4. 完成后在助手窗口按 Ctrl-C 即可退出。插件与助手通过本机 Logseq 的插件存储通信。通过面板生成的预览、备份记录和日志保存在 `~/.local/share/logseq-reading-import/runs/`，密钥只由本机助手使用。
+
+**English:** Preview and import WeRead highlights and personal reviews into the currently open Logseq DB graph. Start the included macOS helper, open **WeRead Notes Import** in the command palette, preview the counts, then confirm the import. A backup is made before each write. Source IDs preserve existing edits across repeated imports.
+
+![WeRead Notes Import preview](docs/preview.png)
+
+下载 [GitHub 安装包](https://github.com/hzphzp/logseq-reading-import/releases/latest) 也可独立使用下列命令行方式。
 
 ## 微信读书
 

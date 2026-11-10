@@ -1,0 +1,18 @@
+{
+  "name": "logseq-reading-import",
+  "version": "1.1.0",
+  "author": "hzphzp",
+  "description": "Preview and import WeRead highlights and reviews into Logseq Desktop 2.0.2 DB graphs using a local macOS helper.",
+  "repository": "https://github.com/hzphzp/logseq-reading-import",
+  "main": "index.html",
+  "supportsDB": true,
+  "supportsDBOnly": true,
+  "logseq": {
+    "id": "logseq-reading-import",
+    "title": "WeRead Notes Import",
+    "icon": "./icon.svg",
+    "supportsDB": true,
+    "supportsDBOnly": true
+  },
+  "license": "MIT"
+}

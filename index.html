@@ -1,0 +1,7 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>微信读书</title><link rel="stylesheet" href="panel.css"></head>
+<body><main><header><img src="icon.svg" width="38" height="38" alt=""><h1>微信读书</h1><button id="close" aria-label="关闭">×</button></header>
+<p id="graph"></p><p id="message" role="status" aria-live="polite"></p>
+<dl id="counts" hidden><div><dt>新增书籍</dt><dd></dd></div><div><dt>新增划线</dt><dd></dd></div><div><dt>新增想法</dt><dd></dd></div></dl>
+<footer><button id="preview">预览</button><button id="apply" disabled>导入此预览</button></footer>
+<details id="setup"><summary>启动本机助手</summary><p>在访达按 ⌘⇧G 打开下面的目录。首次使用运行「设置微信读书密钥.command」，再双击「启动导入助手.command」。导入期间保持助手窗口打开。</p><code>~/.logseq/plugins/logseq-reading-import/</code></details>
+</main><script src="vendor/logseq-sdk/lsplugin.user.js"></script><script type="module" src="panel.js"></script></body></html>
