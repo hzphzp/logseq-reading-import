@@ -2,6 +2,17 @@ name: Publish marketplace plugin
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to build
+        required: true
+        type: string
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
@@ -9,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.RELEASE_TAG }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -20,7 +33,7 @@ jobs:
           python3 -m py_compile marketplace_helper.py
           id=$(node -p 'require("./package.json").logseq.id')
           version=$(node -p 'require("./package.json").version')
-          test "$GITHUB_REF_NAME" = "v$version"
+          test "$RELEASE_TAG" = "v$version"
           mkdir -p "$id/docs"
           cp -R vendor package.json LICENSE README.md index.html panel.js panel.css icon.svg marketplace_helper.py weread_import.py test_weread.py test_marketplace.py 启动导入助手.command 设置微信读书密钥.command 预览微信读书.command 同步微信读书.command "$id/"
           cp docs/*.png "$id/docs/"
@@ -31,4 +44,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           id=$(node -p 'require("./package.json").logseq.id')
-          gh release create "$GITHUB_REF_NAME" "$id.zip" --verify-tag --latest --title "$GITHUB_REF_NAME · WeRead Notes Import" --notes-file "docs/$GITHUB_REF_NAME.md"
+          gh release create "$RELEASE_TAG" "$id.zip" --verify-tag --latest --title "$RELEASE_TAG · WeRead Notes Import" --notes-file "docs/$RELEASE_TAG.md"
